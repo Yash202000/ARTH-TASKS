@@ -1,0 +1,11 @@
+(to see route table)
+>>>route -n 
+
+(to delete entry in route table)
+>>>route del  -net <ip>
+
+(to add ip)
+route add -net <ip> netmask <netmask> gw <gw>
+
+
+link: https://yashpanchwatkar.medium.com/pinging-google-but-not-facebook-1695645a7020
