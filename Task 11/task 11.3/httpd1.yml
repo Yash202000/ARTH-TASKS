@@ -1,0 +1,32 @@
+hosts: web
+vars_files: variables.yml 
+tasks:
+- name: "download package and install service"
+  package:
+    name: httpd
+    state: present
+- name: "copy content to index.html file"
+  copy:
+    content: "This is ansible test file"
+    dest: "{{ document_root }}/index.html"
+- copy:
+    dest: "{{ document_root }}/index.html"
+    src: "index.html"
+- template:
+    dest: "/etc/httpd/conf.d/my.conf"
+    src: "httpd.conf"
+  notify: 
+  - Restart httpd
+  
+- firewalld:
+    port: "{{ port }}/tcp"
+    state: enabled      
+    permanent: yes
+    immediate: yes
+    
+handlers:  
+- name: Restart httpd
+    service:
+      name: "httpd"  
+      state: "started"  
+      enabled: yes
